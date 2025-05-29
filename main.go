@@ -8,6 +8,8 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/go-chi/chi/v5"
 )
 
 var opCodes = []string{"982", "986", "912", "934"}
@@ -109,12 +111,12 @@ func validateHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	mux := http.NewServeMux()
+	router := chi.NewRouter()
 
-	mux.HandleFunc("/", rootHandler)
-	mux.HandleFunc("/ping", pingHandler)
-	mux.HandleFunc("/shutdown", shutdownHandler)
-	mux.HandleFunc("/validatePhoneNumber", validateHandler)
+	router.HandleFunc("/", rootHandler)
+	router.HandleFunc("/ping", pingHandler)
+	router.HandleFunc("/shutdown", shutdownHandler)
+	router.HandleFunc("/validatePhoneNumber", validateHandler)
 
-	http.ListenAndServe(host, mux)
+	http.ListenAndServe(host, router)
 }
