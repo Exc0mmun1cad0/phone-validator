@@ -17,7 +17,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.23.4
-        
-      - name: Print Go version
+          cache-dependency-path: go.sum
+
+      - name: Display go version
         run: |
-          go version
+          go version`
