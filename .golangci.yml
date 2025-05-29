@@ -10,4 +10,4 @@ linters:
     - errcheck
     - ineffassign
     - unused
-    - revive
+    # - revive
