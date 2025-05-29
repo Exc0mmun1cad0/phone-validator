@@ -19,15 +19,15 @@ type Response struct {
 	Normalized string `json:"normalized,omitempty"`
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
+func rootHandler(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 }
 
-func pingHandler(w http.ResponseWriter, r *http.Request) {
+func pingHandler(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func shutdownHandler(w http.ResponseWriter, r *http.Request) {
+func shutdownHandler(_ http.ResponseWriter, _ *http.Request) {
 	os.Exit(0)
 }
 
