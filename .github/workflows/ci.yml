@@ -4,10 +4,12 @@ run-name: CI workflow
 
 on:
   push:
-    branches: [ dev, main ]
+    branches:
+      - dev
+      - main
 
 jobs:
-  build:
+  lint-test-build:
     runs-on: ubuntu-22.04
 
     steps:
@@ -26,10 +28,12 @@ jobs:
     
       - name: Install dependencies
         run: go mod verify
-      
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+
       - name: Build
         run: go build -o app cmd/phone-validator/main.go
       
       - name: Run tests
-        run: |
-          go test -v ./...
+        run: go test -v ./...
