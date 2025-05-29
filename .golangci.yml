@@ -6,8 +6,9 @@ run:
 linters:
   enable:
     - govet
+    - staticcheck
     - errcheck
+    - gosimple
     - ineffassign
-    - typecheck
     - unused
     - revive
