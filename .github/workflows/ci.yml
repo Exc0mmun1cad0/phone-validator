@@ -29,3 +29,7 @@ jobs:
       
       - name: Build
         run: go build -o app cmd/phone-validator/main.go
+      
+      - name: Run tests
+        run: |
+          go test -v ./...
