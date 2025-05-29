@@ -28,4 +28,4 @@ jobs:
         run: go mod verify
       
       - name: Build
-        run: go build cmd/phone-validator/main.go -o app
+        run: go build -o app cmd/phone-validator/main.go
