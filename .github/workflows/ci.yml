@@ -20,4 +20,4 @@ jobs:
         
       - name: Print Go version
         run: |
-          go get version
+          go version
