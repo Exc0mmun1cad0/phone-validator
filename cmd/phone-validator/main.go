@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -53,17 +55,23 @@ func validateHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	if !isValid {
-		json.NewEncoder(w).Encode(
+		if err := json.NewEncoder(w).Encode(
 			Response{Status: false},
-		)
+		); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	} else {
 		normalized := phonenumber.NormalizePhoneNum(phoneNum)
-		json.NewEncoder(w).Encode(
+		if err := json.NewEncoder(w).Encode(
 			Response{
 				Status:     true,
 				Normalized: normalized,
 			},
-		)
+		); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 }
 
@@ -75,5 +83,8 @@ func main() {
 	router.HandleFunc("/shutdown", shutdownHandler)
 	router.HandleFunc("/validatePhoneNumber", validateHandler)
 
-	http.ListenAndServe(host, router)
+	// TODO: implement graceful shutdown
+	if err := http.ListenAndServe(host, router); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatalf("failed to shutdown server")
+	}
 }
