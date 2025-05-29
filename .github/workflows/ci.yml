@@ -25,7 +25,7 @@ jobs:
           go version
     
       - name: Install dependencies
-        run: go get .
+        run: go mod verify
       
       - name: Build
         run: go build cmd/phone-validator/main.go -o app
