@@ -10,6 +10,5 @@ linters:
     - errcheck
     - gosimple
     - ineffassign
-    - typecheck
     - unused
     - revive
