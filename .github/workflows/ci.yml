@@ -21,4 +21,4 @@ jobs:
 
       - name: Display go version
         run: |
-          go version`
+          go version
