@@ -116,5 +116,6 @@ func main() {
 	mux.HandleFunc("/shutdown", shutdownHandler)
 	mux.HandleFunc("/validatePhoneNumber", validateHandler)
 
+	// TODO: add graceful shutdown
 	http.ListenAndServe(host, mux)
 }
