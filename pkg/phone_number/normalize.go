@@ -2,7 +2,7 @@ package phonenumber
 
 import "strings"
 
-func NormalizePhoneNum(phoneNum string) string {
+func Normalize(phoneNum string) string {
 	for _, sym := range []string{" ", "-", "(", ")"} {
 		phoneNum = strings.ReplaceAll(phoneNum, sym, "")
 	}

@@ -35,7 +35,7 @@ func TestNormalize(t *testing.T) {
 		test := test
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
-			assert.Equal(t, test.want, NormalizePhoneNum(test.input))
+			assert.Equal(t, test.want, Normalize(test.input))
 		})
 	}
 }
