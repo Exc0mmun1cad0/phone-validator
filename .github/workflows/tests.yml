@@ -38,7 +38,7 @@ jobs:
       - name: Run go app in background
         run: | 
           nohup go run cmd/main.go > app.log 2>&1 &
-          echo &! > app.pid  
+          echo $! > app.pid  
       
       - name: Wait for app to start
         run: |
