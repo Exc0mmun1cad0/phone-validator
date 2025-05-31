@@ -35,8 +35,10 @@ jobs:
       
       - run: go mod tidy
 
-      - name: Run go app
-        run: go run cmd/main.go
+      - name: Run go app in background
+        run: | 
+          nohup go run cmd/main.go > app.log 2>&1 &
+          echo &! > app.pid  
       
       - name: Wait for app to start
         run: |
@@ -49,3 +51,7 @@ jobs:
       
       - name: Run tests
         run: go test -v ./tests/...
+
+      - name: Stop app
+        if: always()
+        run: kill $(cat app.pid)
