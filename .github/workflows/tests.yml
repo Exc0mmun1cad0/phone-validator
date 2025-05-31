@@ -1,0 +1,51 @@
+name: E2E-tests
+
+run-name: E2E-tests
+
+on:
+  push:
+    branches:
+      - main
+  
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-22.04
+  
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.4
+          cache: true
+          cache-dependency-path: go.sum
+    
+      - name: Display go version
+        run: |
+          go version
+    
+      - name: Install dependencies
+        run: go mod verify
+      
+      - run: go mod tidy
+
+      - name: Run go app
+        run: go run cmd/main.go
+      
+      - name: Wait for app to start
+        run: |
+          for i in $(seq 1 10); do
+            echo $i
+            curl -s localhost:7777/ping && break
+            echo "Waiting for app to start..."
+            sleep 2
+          done
+      
+      - name: Run tests
+        run: go test -v ./tests/...
