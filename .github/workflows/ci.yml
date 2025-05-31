@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  lint-test-build:
+  ci:
     runs-on: ubuntu-22.04
 
     steps:

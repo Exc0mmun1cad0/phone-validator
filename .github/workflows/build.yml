@@ -1,0 +1,24 @@
+name: Build
+
+run-name: Build Docker image and push it to registry
+
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t fauxmen4/phone-validator:latest .
+    
+      - name: Push image to DockerHub
+        run: |
+          docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push fauxmen4/phone-validator:latest
